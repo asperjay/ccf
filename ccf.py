@@ -3,9 +3,20 @@ import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 from pygame.locals import *
+class Renderer:
+    def __init__(self,screen):
+        self.screen=screen
+    def render(self,image,pos):
+        self.screen.blit(image, pos)
 class Square:
-    def __init__():
-        pass
+    def __init__(self,largeTicks):
+        self.largeTicks=largeTicks
+    def getLargeTicks(self):
+        return self.largeTicks
+    def incrementLargeTicks(self,modifier):
+        self.largeTicks+=modifier
+    def setLargeTicks(self,new):
+        self.largeTicks=new
 #pygame init
 pygame.init()
 width, height=640,480
@@ -15,8 +26,10 @@ screen=pygame.display.set_mode((width, height))
 #togglable
 cooldownTicks=5
 #default
-largeTicks=0
 clicks=0
+#objects
+main=Renderer(screen)
+mainSq=Square(0)
 
 #image loads
 #__=pygame.image.load('directory')
@@ -29,16 +42,16 @@ while True: #mainloop
     for x in range(int(width/background.get_width()+4)):
         for y in range(int(height/background.get_height()+4)):
             screen.blit(background,(x*100,y*100))
-    if largeTicks>0:
-        largeTicks-=1
-        screen.blit(squareBig, (240,160))
+    if mainSq.getLargeTicks()>0:
+        mainSq.incrementLargeTicks(-1)
+        main.render(squareBig, (240,160))
     else:
-        screen.blit(squareSmall, (245,165))
+        main.render(squareSmall, (245,165))
     font = pygame.font.Font(None, 24)
     survivedtext = font.render(str(clicks), True, (0,0,0))
     textRect = survivedtext.get_rect()
     textRect.topright=[635,5]
-    screen.blit(survivedtext, textRect)
+    main.render(survivedtext, textRect)
     #events
     pygame.display.flip()
     for event in pygame.event.get():
@@ -46,10 +59,10 @@ while True: #mainloop
             pygame.quit()
             exit(0)
         if event.type==pygame.MOUSEBUTTONDOWN:
-            if largeTicks==0:
+            if mainSq.getLargeTicks()==0:
                 x, y=pygame.mouse.get_pos()
                 if x>245 and x<395 and y>165 and y<315:
-                    largeTicks=cooldownTicks
+                    mainSq.setLargeTicks(cooldownTicks)
                     clicks+=1
                     print(clicks)
                 
