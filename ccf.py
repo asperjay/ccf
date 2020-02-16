@@ -27,6 +27,7 @@ screen=pygame.display.set_mode((width, height))
 cooldownTicks=5
 #default
 clicks=0
+adder=1
 #objects
 main=Renderer(screen)
 mainSq=Square(0)
@@ -63,5 +64,5 @@ while True: #mainloop
                 x, y=pygame.mouse.get_pos()
                 if x>245 and x<395 and y>165 and y<315:
                     mainSq.setLargeTicks(cooldownTicks)
-                    clicks+=1
+                    clicks+=adder
                 
