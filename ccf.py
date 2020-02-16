@@ -3,7 +3,9 @@ import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 from pygame.locals import *
-
+class Square:
+    def __init__():
+        pass
 #pygame init
 pygame.init()
 width, height=640,480
@@ -32,6 +34,11 @@ while True: #mainloop
         screen.blit(squareBig, (240,160))
     else:
         screen.blit(squareSmall, (245,165))
+    font = pygame.font.Font(None, 24)
+    survivedtext = font.render(str(clicks), True, (0,0,0))
+    textRect = survivedtext.get_rect()
+    textRect.topright=[635,5]
+    screen.blit(survivedtext, textRect)
     #events
     pygame.display.flip()
     for event in pygame.event.get():
