@@ -48,7 +48,7 @@ while True: #mainloop
     else:
         main.render(squareSmall, (245,165))
     font = pygame.font.Font(None, 24)
-    survivedtext = font.render(str(clicks), True, (0,0,0))
+    survivedtext = font.render(str(clicks), False, (0,0,0))
     textRect = survivedtext.get_rect()
     textRect.topright=[635,5]
     main.render(survivedtext, textRect)
@@ -64,5 +64,4 @@ while True: #mainloop
                 if x>245 and x<395 and y>165 and y<315:
                     mainSq.setLargeTicks(cooldownTicks)
                     clicks+=1
-                    print(clicks)
                 
